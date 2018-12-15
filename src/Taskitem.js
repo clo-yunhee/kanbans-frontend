@@ -7,6 +7,37 @@ import parseDateTime from './app/parseDateTime.js';
 import './Taskitem.css';
 
 export default class Taskitem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+    }
+
+    handleChange(event) {
+        const { onEdit } = this.props;
+
+        const value = event.target.value;
+
+        // preprocess input
+        alert(value);
+
+        if (onEdit) {
+            onEdit(value);
+        }
+    }
+
+    handleClick(event) {
+        const p = event.target;
+        
+        p.contentEditable = true;
+        p.focus();
+    }
+
+    handleBlur(event) {
+        event.target.contentEditable = false;
+    }
+
     render() {
         const { _id, listIndex, content } = this.props.data;
 
@@ -26,12 +57,14 @@ export default class Taskitem extends React.Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <p className="item-content">
+                        <p className="item-content"
+                            contentEditable="true" 
+                            onChange={this.handleChange}>
                             {content}
                         </p>
                         <footer className="item-footer">
-                            Last edited {createdOn.toLocaleString()}<br />
-                            Last updated {updatedOn ? updatedOn.toLocaleString() : "never"}<br />
+                            Created on {createdOn.toLocaleString()}<br />
+                            Last edit on {updatedOn ? updatedOn.toLocaleString() : "never"}<br />
                         </footer>
                     </div>
                 )}

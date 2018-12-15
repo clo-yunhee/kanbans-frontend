@@ -14,17 +14,29 @@ export default class App extends Component {
     }
 
     componentWillMount() {
-        const id = '26d301d2-ff22-11e8-ac5d-42010a84008d';
+        let { data, id } = this.props;
 
-        fetchBoard(data => {
-            this.setState({board: (
+        if (data) {
+            this.setState({board: 
                 <Taskboard
-                    key={id}
+                    key={data._id}
                     data={data}
                 />
-            )});
-        }, id);
+            });
+        } else {
+            if (!id) {
+                id = '26d301d2-ff22-11e8-ac5d-42010a84008d';
+            }
 
+            fetchBoard(data => {
+                this.setState({board:
+                    <Taskboard
+                        key={id}
+                        data={data}
+                    />
+                });
+            }, id); 
+       }
     }
 
     render() {
