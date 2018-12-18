@@ -4,6 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import JavascriptTimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en';
+
+JavascriptTimeAgo.locale(en);
+
 const data = {
     _id: 'board0',
     boardName: 'Board Name',
@@ -12,6 +18,7 @@ const data = {
         {
             _id: 'list0',
             listName: 'List 1',
+            columnIndex: 0,
 
             items: [
                 {
@@ -19,7 +26,7 @@ const data = {
                     content: 'Item 1',
                     listIndex: 0,
                     createdOn: 1544862542,
-                    updatedOn: null,
+                    updatedOn: (Date.now() / 1000) - 44,
                 },
                 {
                     _id: 'item1',
@@ -33,6 +40,7 @@ const data = {
         {
             _id: 'list1',
             listName: 'List 2',
+            columnIndex: 1,
 
             items: [
                 {

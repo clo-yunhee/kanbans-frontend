@@ -17,7 +17,7 @@ export default class App extends Component {
         let { data, id } = this.props;
 
         if (data) {
-            this.setState({board: 
+            this.setState({board:
                 <Taskboard
                     key={data._id}
                     data={data}
@@ -35,7 +35,7 @@ export default class App extends Component {
                         data={data}
                     />
                 });
-            }, id); 
+            }, id);
        }
     }
 

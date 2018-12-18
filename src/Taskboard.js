@@ -1,25 +1,23 @@
 import React from 'react';
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import Tasklist from './Tasklist';
 
-import taskItemMoved from './app/taskItemMoved.js';
+import taskItemMoved from './app/taskItemMoved';
 
-import './Taskboard.css';
+import { BoardContainer, BoardHeader,
+         BoardHeaderTitle, BoardLists } from './styles/Taskboard';
 
 export default class Taskboard extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.taskItemMoved = taskItemMoved.bind(this);
-    }
-
-    findList(id) {
+    findList = (id) => {
         return this.props.data.lists.find(
             list => list._id.toString() === id
         );
     }
+
+    handleDragEnd = taskItemMoved.bind(this);
 
     renderLists(lists) {
         if (lists) {
@@ -35,18 +33,37 @@ export default class Taskboard extends React.Component {
     }
 
     render() {
-        const { boardName, lists } = this.props.data;
+        const { _id, boardName, lists } = this.props.data;
 
         return (
-            <DragDropContext onDragEnd={this.taskItemMoved}>
-                <div className="board-container">
-                    <header className="board-header">
-                        <h2 className="board-title">{boardName}</h2>
-                    </header>
-                    <div className="board">
-                        {this.renderLists(lists)}
-                    </div>
-                </div>
+            <DragDropContext onDragEnd={this.handleDragEnd}>
+                <BoardContainer>
+                    <BoardHeader>
+                        <BoardHeaderTitle
+                            multiLine={false}
+                            onChange={this.handleChange}
+                            onUpdate={this.handleUpdate}
+                        >
+                            {boardName}
+                        </BoardHeaderTitle>
+                    </BoardHeader>
+                    <Droppable
+                        type="LIST"
+                        droppableId={_id.toString()}
+                        direction="horizontal"
+                    >
+                        {(provided, snapshot) =>
+                            <BoardLists
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                {...provided.dropHandleProps}
+                            >
+                                {this.renderLists(lists)}
+                                {provided.placeholder}
+                            </BoardLists>
+                        }
+                    </Droppable>
+                </BoardContainer>
             </DragDropContext>
         );
     }

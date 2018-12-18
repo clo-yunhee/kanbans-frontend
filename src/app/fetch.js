@@ -9,8 +9,7 @@ function makeRequest(urlBuilder) {
         let callback = args.shift();
         let url = host + urlBuilder(args);
 
-        requestGET(url, res => {
-            let data = JSON.parse(res.responseText);
+        requestGET(url, data => {
             if (data.error) {
                 console.error("Fetching board error: " + data.msg);
                 return;

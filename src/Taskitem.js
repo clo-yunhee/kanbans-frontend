@@ -1,41 +1,25 @@
 import React from 'react';
 
 import { Draggable } from 'react-beautiful-dnd';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import parseDateTime from './app/parseDateTime.js';
+import parseDateTime from './app/parseDateTime';
 
-import './Taskitem.css';
+import TimeAgo from 'react-time-ago/no-tooltip';
+import { convenient } from 'javascript-time-ago/gradation';
+
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
+import { ItemContainer, ItemContent, ItemFooter } from './styles/Taskitem';
 
 export default class Taskitem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
+
+    handleChange = (value) => {
+        this.props.data.content = value;
     }
 
-    handleChange(event) {
-        const { onEdit } = this.props;
-
-        const value = event.target.value;
-
-        // preprocess input
-        alert(value);
-
-        if (onEdit) {
-            onEdit(value);
-        }
-    }
-
-    handleClick(event) {
-        const p = event.target;
-        
-        p.contentEditable = true;
-        p.focus();
-    }
-
-    handleBlur(event) {
-        event.target.contentEditable = false;
+    handleUpdate = (value) => {
+        console.log("Updated item: ", value);
     }
 
     render() {
@@ -44,29 +28,50 @@ export default class Taskitem extends React.Component {
         const createdOn = parseDateTime(this.props.data.createdOn);
         const updatedOn = parseDateTime(this.props.data.updatedOn);
 
+        const createdTimeStyle = {
+            flavour: 'long',
+            gradation: convenient,
+        };
+
+        const body = (
+            <React.Fragment>
+                <PerfectScrollbar>
+                    <ItemContent
+                        multiLine={true}
+                        onChange={this.handleChange}
+                        onUpdate={this.handleUpdate}
+                    >
+                        {content}
+                    </ItemContent>
+                </PerfectScrollbar>
+                <ItemFooter>
+                    <div>
+                        Created <TimeAgo timeStyle={createdTimeStyle}>{createdOn}</TimeAgo>
+                    </div>
+                    <div>
+                        Last edited {updatedOn ? ( <TimeAgo>{updatedOn}</TimeAgo> ) : "never"}
+                    </div>
+                </ItemFooter>
+            </React.Fragment>
+        );
+
         return (
             <Draggable
                 key={_id}
+                type="ITEM"
                 draggableId={_id.toString()}
                 index={listIndex}
             >
                 {(provided, snapshot) => (
-                    <div
+                    <ItemContainer
+                        key={_id}
                         ref={provided.innerRef}
-                        className="item-container"
+                        isDragging={snapshot.isDragging}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                     >
-                        <p className="item-content"
-                            contentEditable="true" 
-                            onChange={this.handleChange}>
-                            {content}
-                        </p>
-                        <footer className="item-footer">
-                            Created on {createdOn.toLocaleString()}<br />
-                            Last edit on {updatedOn ? updatedOn.toLocaleString() : "never"}<br />
-                        </footer>
-                    </div>
+                        {body}
+                    </ItemContainer>
                 )}
             </Draggable>
         );

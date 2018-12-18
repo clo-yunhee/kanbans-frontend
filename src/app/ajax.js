@@ -1,23 +1,41 @@
 // use json transactions
 
-export function requestGET(url, callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                callback(this);
-            } else {
-                console.error('Request failed: ' + this.status);
-            }
-        }
+function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response);
+    } else {
+        return Promise.reject(new Error(response.statusText));
     }
-    xhr.open("GET", url, true);
-    xhr.send();
 }
 
-export function requestPOST(url, data) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send(JSON.stringify(data));
+function json(response) {
+    return response.json();
+}
+
+function logError(err) {
+    console.error('Request failed', err);
+}
+
+export function requestGET(url, callback) {
+    fetch(url)
+        .then(status)
+        .then(json)
+        .then(callback)
+        .catch(logError);
+}
+
+export function requestPOST(url, data, callback) {
+    if (!callback) callback = () => {};
+
+    fetch(url, {
+            method: 'post',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        })
+        .then(status)
+        .then(json)
+        .then(callback)
+        .catch(logError);
 }
