@@ -26,13 +26,16 @@ export const ListContainer = styled.div`
 
 export const ListHeader = styled.header`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border-top-left-radius: ${radius}px;
     border-top-right-radius: ${radius}px;
+    transition: background-color 0.2s ease;
+    overflow: hidden;
+
     background-color: ${({ isDragging }) =>
         isDragging ? '#d9fcff' : 'lightblue'};
-    transition: background-color 0.1s ease;
 
     &:hover {
         background-color: #d9fcff;
@@ -41,15 +44,33 @@ export const ListHeader = styled.header`
 
 export const ListHeaderTitle = styled(EditableText)`
     padding: ${grid}px;
-    transition: background-color ease 0.2s;
-    flex-grow: 1;
     position: relative;
+
+    width: 100%;
 
     font-size: 1.5rem;
     font-weight: bold;
     color: #172b4d;
 
     min-height: 1rem;
+
+`;
+
+export const ListHeaderDrag = styled.span`
+    width: 100%;
+    height: 1rem;
+
+    transition: background-color 0.2s ease;
+
+    background-color: ${({ isDragging }) =>
+        isDragging ? '#89c7db' : '#add8e6'};
+
+    border-bottom: 1px dotted #4d4d4d;
+
+    &:hover {
+        background-color: #89c7db;
+    }
+
 `;
 
 export const ListScrollContainer = styled(PerfectScrollbar)`

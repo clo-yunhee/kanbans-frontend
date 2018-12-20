@@ -1,17 +1,12 @@
-import { requestGET } from './ajax.js';
+import { requestGET, defaultHost } from './ajax';
 
-const host = 'http://localhost/';
-
-function makeRequest(urlBuilder) {
-    return function() {
-        let args = Array.from(arguments);
-
-        let callback = args.shift();
-        let url = host + urlBuilder(args);
+function makeRequest(name, urlBuilder) {
+    return function(callback, ...args) {
+        let url = defaultHost + urlBuilder(args);
 
         requestGET(url, data => {
             if (data.error) {
-                console.error("Fetching board error: " + data.msg);
+                console.error(`Fetching ${name} error: ${data.msg}`);
                 return;
             }
 
@@ -20,14 +15,14 @@ function makeRequest(urlBuilder) {
     }
 }
 
-export const fetchBoard = makeRequest((boardId) =>
+export const fetchBoard = makeRequest('board', (boardId) =>
                             `/api/get/${boardId}`);
 //                            `/api/get_board.php?boardId=${boardId}`);
 
-export const fetchList = makeRequest((boardId, listId) =>
+export const fetchList = makeRequest('list', (boardId, listId) =>
                            `/api/get/${boardId}/${listId}`);
 //                           `/api/get_list.php?boardId=${boardId}&&listId=${listId}`);
 
-export const fetchItem = makeRequest((boardId, listId, itemId) =>
+export const fetchItem = makeRequest('item', (boardId, listId, itemId) =>
                            `/api/get/${boardId}/${listId}/${itemId}`);
 //                           `/api/get_item.php?boardId=${boardId}&&listId=${listId}&&itemId=${itemId}`);

@@ -9,7 +9,21 @@ import taskItemMoved from './app/taskItemMoved';
 import { BoardContainer, BoardHeader,
          BoardHeaderTitle, BoardLists } from './styles/Taskboard';
 
+import { updateBoard } from './app/update';
+import extractProps from './app/extractProps';
+
 export default class Taskboard extends React.Component {
+
+    handleChange = (value) => {
+        this.props.data.boardName = value;
+    }
+
+    handleUpdate = (value) => {
+        updateBoard(extractProps(
+            ['_id', 'boardName'],
+            this.props.data
+        ));
+    }
 
     findList = (id) => {
         return this.props.data.lists.find(
@@ -49,7 +63,7 @@ export default class Taskboard extends React.Component {
                     </BoardHeader>
                     <Droppable
                         type="LIST"
-                        droppableId={_id.toString()}
+                        droppableId={"B\\" + _id}
                         direction="horizontal"
                     >
                         {(provided, snapshot) =>

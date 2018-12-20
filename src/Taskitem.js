@@ -12,6 +12,9 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import { ItemContainer, ItemContent, ItemFooter } from './styles/Taskitem';
 
+import { updateItem } from './app/update';
+import extractProps from './app/extractProps';
+
 export default class Taskitem extends React.Component {
 
     handleChange = (value) => {
@@ -19,7 +22,10 @@ export default class Taskitem extends React.Component {
     }
 
     handleUpdate = (value) => {
-        console.log("Updated item: ", value);
+        updateItem(extractProps(
+            ['_id', 'listId', 'boardId', 'content'],
+            this.props.postData
+        ));
     }
 
     render() {
@@ -59,7 +65,7 @@ export default class Taskitem extends React.Component {
             <Draggable
                 key={_id}
                 type="ITEM"
-                draggableId={_id.toString()}
+                draggableId={"I\\" + _id}
                 index={listIndex}
             >
                 {(provided, snapshot) => (

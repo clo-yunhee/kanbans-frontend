@@ -1,24 +1,43 @@
-function reorder(list, startIndex, endIndex, update) {
+import { updateItem, updateList } from './update';
+import extractProps from './extractProps';
+
+function reorder(list, startIndex, endIndex, assign) {
     const [removed] = list.splice(startIndex, 1);
     list.splice(endIndex, 0, removed);
 
-    list.forEach(update);
+    list.forEach(assign);
 }
 
-function move(src, dest, srcIndex, destIndex, update) {
+function move(src, dest, srcIndex, destIndex, assign) {
     const [removed] = src.splice(srcIndex, 1);
     dest.splice(destIndex, 0, removed);
 
-    src.forEach(update);
-    dest.forEach(update);
+    src.forEach(assign);
+    dest.forEach(assign);
 }
 
-function updateItem(item, index) {
+// TODO: also update the listId
+
+const assignItem = (dest) => function(item, index) {
     item.listIndex = index;
+    item.listId = dest._id;
+
+    updateItem(extractProps(
+        ['_id', 'listId', 'boardId', 'listIndex'],
+        item
+    ));
 }
 
-function updateList(list, index) {
+function assignList(list, index) {
     list.columnIndex = index;
+    updateList(extractProps(
+        ['_id', 'boardId', 'columnIndex'],
+        list
+    ));
+}
+
+function getIntId(id) {
+    return id.substring(id.indexOf("\\") + 1);
 }
 
 export default function taskItemMoved(result) {
@@ -37,18 +56,18 @@ export default function taskItemMoved(result) {
 
     // if moving columns
     if (type === 'LIST') {
-        reorder(this.props.data.lists, source.index, destination.index, updateList);
+        reorder(this.props.data.lists, source.index, destination.index, assignList);
         return;
     }
 
-    const src = this.findList(source.droppableId);
+    const src = this.findList(getIntId(source.droppableId));
 
     if (source.droppableId === destination.droppableId) {
-        reorder(src.items, source.index, destination.index, updateItem);
+        reorder(src.items, source.index, destination.index, assignItem(src));
     } else {
-        const dest = this.findList(destination.droppableId);
+        const dest = this.findList(getIntId(destination.droppableId));
 
-        move(src.items, dest.items, source.index, destination.index, updateItem);
+        move(src.items, dest.items, source.index, destination.index, assignItem(dest));
     }
 
     this.forceUpdate();

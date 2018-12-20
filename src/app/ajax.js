@@ -32,10 +32,12 @@ export function requestPOST(url, data, callback) {
             headers: {
                 'Content-type': 'application/json'
             },
-            body: data
+            body: JSON.stringify(data)
         })
         .then(status)
         .then(json)
         .then(callback)
         .catch(logError);
 }
+
+export const defaultHost = 'http://localhost/';

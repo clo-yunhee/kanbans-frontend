@@ -7,15 +7,22 @@ import Taskitem from './Taskitem';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import { ListContainer, ListHeader, ListHeaderTitle,
-         ListScrollContainer, ListItems } from './styles/Tasklist';
+         ListHeaderDrag, ListScrollContainer, ListItems } from './styles/Tasklist';
+
+import { updateList } from './app/update';
+import extractProps from './app/extractProps';
 
 export default class Tasklist extends React.Component {
+
     handleChange = (value) => {
         this.props.data.listName = value;
     }
 
     handleUpdate = (value) => {
-        console.log("Update list: ", value);
+        updateList(extractProps(
+            ['_id', 'boardId', 'listName'],
+            this.props.data
+        ));
     }
 
     findItem = (id) => {
@@ -45,42 +52,11 @@ export default class Tasklist extends React.Component {
         const { _id, listName,
                 columnIndex, items } = this.props.data;
 
-        const list = (
-            <React.Fragment>
-                <ListHeader>
-                    <ListHeaderTitle
-                        multiLine={false}
-                        onChange={this.handleChange}
-                        onUpdate={this.handleUpdate}
-                    >
-                        {listName}
-                    </ListHeaderTitle>
-                </ListHeader>
-                <ListScrollContainer>
-                    <Droppable
-                        type="ITEM"
-                        droppableId={_id.toString()}
-                    >
-                        {(provided, snapshot) => (
-                            <ListItems
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                isDraggingOver={snapshot.isDraggingOver}
-                            >
-                                {this.renderOrderedItems(items)}
-                                {provided.placeholder}
-                            </ListItems>
-                        )}
-                    </Droppable>
-                </ListScrollContainer>
-            </React.Fragment>
-        );
-
         return (
             <Draggable
                 key={_id}
                 type="LIST"
-                draggableId={_id.toString()}
+                draggableId={"L\\" + _id}
                 index={columnIndex}
             >
                 {(provided, snapshot) =>
@@ -89,9 +65,38 @@ export default class Tasklist extends React.Component {
                         ref={provided.innerRef}
                         isDragging={snapshot.isDragging}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                     >
-                        {list}
+                        <ListHeader isDragging={snapshot.isDragging}>
+                            <ListHeaderDrag
+                                isDragging={snapshot.isDragging}
+                                {...provided.dragHandleProps}
+                            />
+                            <ListHeaderTitle
+                                multiLine={false}
+                                onChange={this.handleChange}
+                                onUpdate={this.handleUpdate}
+                                isDragging={snapshot.isDragging}
+                            >
+                                {listName}
+                            </ListHeaderTitle>
+                        </ListHeader>
+                        <ListScrollContainer>
+                            <Droppable
+                                type="ITEM"
+                                droppableId={"L\\" + _id}
+                            >
+                                {(dropProvided, dropSnapshot) => (
+                                    <ListItems
+                                        ref={dropProvided.innerRef}
+                                        {...dropProvided.droppableProps}
+                                        isDraggingOver={dropSnapshot.isDraggingOver}
+                                    >
+                                        {this.renderOrderedItems(items)}
+                                        {dropProvided.placeholder}
+                                    </ListItems>
+                                )}
+                            </Droppable>
+                        </ListScrollContainer>
                     </ListContainer>
                 }
             </Draggable>
