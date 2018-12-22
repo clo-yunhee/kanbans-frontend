@@ -8,19 +8,21 @@ function reorder(list, startIndex, endIndex, assign) {
     list.forEach(assign);
 }
 
-function move(src, dest, srcIndex, destIndex, assign) {
+function move(src, dest, srcIndex, destIndex, srcAssign, destAssign) {
     const [removed] = src.splice(srcIndex, 1);
     dest.splice(destIndex, 0, removed);
 
-    src.forEach(assign);
-    dest.forEach(assign);
+    src.forEach(srcAssign);
+    dest.forEach(destAssign);
 }
 
 // TODO: also update the listId
 
-const assignItem = (dest) => function(item, index) {
+const assignItem = (listId) => function(item, index) {
     item.listIndex = index;
-    item.listId = dest._id;
+    item.listId = listId;
+
+    console.log(item);
 
     updateItem(extractProps(
         ['_id', 'listId', 'boardId', 'listIndex'],
@@ -30,6 +32,7 @@ const assignItem = (dest) => function(item, index) {
 
 function assignList(list, index) {
     list.columnIndex = index;
+
     updateList(extractProps(
         ['_id', 'boardId', 'columnIndex'],
         list
@@ -60,14 +63,19 @@ export default function taskItemMoved(result) {
         return;
     }
 
-    const src = this.findList(getIntId(source.droppableId));
+    const srcId = getIntId(source.droppableId);
+    const destId = getIntId(destination.droppableId);
 
-    if (source.droppableId === destination.droppableId) {
-        reorder(src.items, source.index, destination.index, assignItem(src));
+    const src = this.findList(srcId);
+    const srcAssign = assignItem(srcId);
+
+    if (srcId === destId) {
+        reorder(src.items, source.index, destination.index, srcAssign);
     } else {
-        const dest = this.findList(getIntId(destination.droppableId));
+        const dest = this.findList(destId);
+        const destAssign = assignItem(destId);
 
-        move(src.items, dest.items, source.index, destination.index, assignItem(dest));
+        move(src.items, dest.items, source.index, destination.index, srcAssign, destAssign);
     }
 
     this.forceUpdate();
