@@ -4,7 +4,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import Tasklist from '../Tasklist';
 
-import taskItemMoved from '../app/taskItemMoved';
+import { taskItemMoved } from '../eventHandlers';
 
 import { BoardContainer, BoardHeader,
          BoardHeaderTitle, BoardLists } from './style';
