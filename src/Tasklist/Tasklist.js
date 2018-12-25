@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
-import Taskitem from './Taskitem';
+import Taskitem from '../Taskitem';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import { ListContainer, ListHeader, ListHeaderTitle,
-         ListHeaderDrag, ListScrollContainer, ListItems } from './styles/Tasklist';
+         ListHeaderDrag, ListScrollContainer, ListItems } from './style';
 
-import { updateList } from './app/update';
-import extractProps from './app/extractProps';
+import { updateList } from '../app/update';
+import extractProps from '../app/extractProps';
 
 export default class Tasklist extends React.Component {
 

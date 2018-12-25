@@ -3,17 +3,17 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import parseDateTime from './app/parseDateTime';
+import parseDateTime from '../app/parseDateTime';
 
 import TimeAgo from 'react-time-ago/no-tooltip';
 import { convenient } from 'javascript-time-ago/gradation';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
-import { ItemContainer, ItemContent, ItemFooter } from './styles/Taskitem';
+import { ItemContainer, ItemContent, ItemFooter } from './style';
 
-import { updateItem } from './app/update';
-import extractProps from './app/extractProps';
+import { updateItem } from '../app/update';
+import extractProps from '../app/extractProps';
 
 export default class Taskitem extends React.Component {
 

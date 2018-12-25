@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Taskboard from './Taskboard';
+import Taskboard from '../Taskboard';
 
-import { AppContainer, BoardWrapper } from './styles/App';
+import { AppContainer, BoardWrapper } from './style';
 
-import { fetchBoard } from './app/fetch.js';
+import { fetchBoard } from '../app/fetch';
 
 export default class App extends React.Component {
 

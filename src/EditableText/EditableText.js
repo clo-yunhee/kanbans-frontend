@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ContentEditable from 'react-sane-contenteditable';
 
-import updateLater from './app/updateLater';
+import updateLater from '../app/updateLater';
 
 const StyledEditable = styled(ContentEditable).attrs({
     editable: true
