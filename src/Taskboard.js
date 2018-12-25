@@ -33,17 +33,21 @@ export default class Taskboard extends React.Component {
 
     handleDragEnd = taskItemMoved.bind(this);
 
-    renderLists(lists) {
+    renderOrderedLists(lists) {
+        let board = [];
+
         if (lists) {
-            return lists.map(list =>
-                <Tasklist
-                    key={list._id}
-                    data={list}
-                />
+            lists.forEach(list => {
+                board[list.columnIndex] = (
+                    <Tasklist
+                        key={list._id}
+                        data={list}
+                    />
+                )}
             );
         }
 
-        return [];
+        return board;
     }
 
     render() {
@@ -72,7 +76,7 @@ export default class Taskboard extends React.Component {
                                 {...provided.droppableProps}
                                 {...provided.dropHandleProps}
                             >
-                                {this.renderLists(lists)}
+                                {this.renderOrderedLists(lists)}
                                 {provided.placeholder}
                             </BoardLists>
                         }
