@@ -4,7 +4,7 @@ import Taskboard from '../Taskboard';
 
 import { AppContainer, BoardWrapper } from './style';
 
-import { fetchBoard } from '../app/fetch';
+import { fetchBoard } from '../fetch';
 
 export default class App extends React.Component {
 

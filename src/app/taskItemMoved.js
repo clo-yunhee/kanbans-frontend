@@ -1,5 +1,5 @@
-import { updateItem, updateList } from './update';
-import extractProps from './extractProps';
+import { updateItem, updateList } from '../update';
+import { extractProps } from '../utils';
 
 function reorder(list, startIndex, endIndex, assign) {
     const [removed] = list.splice(startIndex, 1);

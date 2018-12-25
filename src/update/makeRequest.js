@@ -1,6 +1,6 @@
-import { requestPOST, defaultHost } from './ajax';
+import { requestPOST, defaultHost } from '../utils';
 
-function makeRequest(name, url) {
+export default function makeRequest(name, url) {
     return function(data, callback) {
         return requestPOST(defaultHost + url, data, resData => {
             if (resData.error) {
@@ -14,7 +14,3 @@ function makeRequest(name, url) {
         });
     }
 }
-
-export const updateBoard = makeRequest('board', '/api/update/board');
-export const updateList = makeRequest('list', '/api/update/list');
-export const updateItem = makeRequest('item', '/api/update/item');

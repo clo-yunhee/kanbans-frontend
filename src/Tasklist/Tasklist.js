@@ -9,8 +9,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { ListContainer, ListHeader, ListHeaderTitle,
          ListHeaderDrag, ListScrollContainer, ListItems } from './style';
 
-import { updateList } from '../app/update';
-import extractProps from '../app/extractProps';
+import { updateList } from '../update';
+import { extractProps } from '../utils';
 
 export default class Tasklist extends React.Component {
 

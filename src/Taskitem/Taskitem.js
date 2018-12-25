@@ -3,8 +3,6 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-import parseDateTime from '../app/parseDateTime';
-
 import TimeAgo from 'react-time-ago/no-tooltip';
 import { convenient } from 'javascript-time-ago/gradation';
 
@@ -12,8 +10,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import { ItemContainer, ItemContent, ItemFooter } from './style';
 
-import { updateItem } from '../app/update';
-import extractProps from '../app/extractProps';
+import { updateItem } from '../update';
+import { extractProps } from '../utils';
 
 export default class Taskitem extends React.Component {
 
@@ -29,10 +27,13 @@ export default class Taskitem extends React.Component {
     }
 
     render() {
-        const { _id, listIndex, content } = this.props.data;
+        const { _id, listIndex, content,
+                createdOn, updatedOn } = this.props.data;
 
-        const createdOn = parseDateTime(this.props.data.createdOn);
-        const updatedOn = parseDateTime(this.props.data.updatedOn);
+        const createdOnDate = new Date(createdOn * 1000);
+        const updatedOnDate = (updatedOn !== null)
+                                ? new Date(updatedOn * 1000)
+                                : null;
 
         const createdTimeStyle = {
             flavour: 'long',
@@ -52,10 +53,10 @@ export default class Taskitem extends React.Component {
                 </PerfectScrollbar>
                 <ItemFooter>
                     <div>
-                        Created <TimeAgo timeStyle={createdTimeStyle}>{createdOn}</TimeAgo>
+                        Created <TimeAgo timeStyle={createdTimeStyle}>{createdOnDate}</TimeAgo>
                     </div>
                     <div>
-                        Last edited {updatedOn ? ( <TimeAgo>{updatedOn}</TimeAgo> ) : "never"}
+                        Last edited {(updatedOnDate !== null) ? ( <TimeAgo>{updatedOnDate}</TimeAgo> ) : "never"}
                     </div>
                 </ItemFooter>
             </React.Fragment>

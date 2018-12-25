@@ -9,8 +9,8 @@ import taskItemMoved from '../app/taskItemMoved';
 import { BoardContainer, BoardHeader,
          BoardHeaderTitle, BoardLists } from './style';
 
-import { updateBoard } from '../app/update';
-import extractProps from '../app/extractProps';
+import { updateBoard } from '../update';
+import { extractProps } from '../utils';
 
 export default class Taskboard extends React.Component {
 
