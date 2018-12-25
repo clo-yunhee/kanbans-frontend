@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
 import Taskboard from './Taskboard';
 
+import { AppContainer, BoardWrapper } from './styles/App';
+
 import { fetchBoard } from './app/fetch.js';
 
-export default class App extends Component {
+export default class App extends React.Component {
 
     constructor(props) {
         super(props);
@@ -41,11 +41,11 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
+            <AppContainer>
+                <BoardWrapper>
                     {this.state.board}
-                </header>
-            </div>
+                </BoardWrapper>
+            </AppContainer>
         );
     }
 }
