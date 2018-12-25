@@ -24,7 +24,7 @@ export default class Taskitem extends React.Component {
     handleUpdate = (value) => {
         updateItem(extractProps(
             ['_id', 'listId', 'boardId', 'content'],
-            this.props.postData
+            this.props.data
         ));
     }
 

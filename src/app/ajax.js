@@ -1,10 +1,10 @@
 // use json transactions
 
-function status(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return Promise.resolve(response);
+function handleErrors(response) {
+    if (response.ok && response.status >= 200 && response.status < 300) {
+        return response;
     } else {
-        return Promise.reject(new Error(response.statusText));
+        throw new Error(response.statusText);
     }
 }
 
@@ -18,7 +18,7 @@ function logError(err) {
 
 export function requestGET(url, callback) {
     fetch(url)
-        .then(status)
+        .then(handleErrors)
         .then(json)
         .then(callback)
         .catch(logError);
@@ -34,7 +34,7 @@ export function requestPOST(url, data, callback) {
             },
             body: JSON.stringify(data)
         })
-        .then(status)
+        .then(handleErrors)
         .then(json)
         .then(callback)
         .catch(logError);
