@@ -16,13 +16,9 @@ function move(src, dest, srcIndex, destIndex, srcAssign, destAssign) {
     dest.forEach(destAssign);
 }
 
-// TODO: also update the listId
-
 const assignItem = (listId) => function(item, index) {
     item.listIndex = index;
     item.listId = listId;
-
-    console.log(item);
 
     updateItem(extractProps(
         ['_id', 'listId', 'boardId', 'listIndex'],

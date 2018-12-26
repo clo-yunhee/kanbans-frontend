@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LoginDialog from '../LoginDialog';
 import Taskboard from '../Taskboard';
 
 import { AppContainer, BoardWrapper } from './style';
@@ -42,6 +43,9 @@ export default class App extends React.Component {
     render() {
         return (
             <AppContainer>
+                <header>
+                    <LoginDialog />
+                </header>
                 <BoardWrapper>
                     {this.state.board}
                 </BoardWrapper>
