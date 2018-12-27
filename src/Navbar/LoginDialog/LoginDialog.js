@@ -2,11 +2,12 @@ import React from 'react';
 
 import {
     Form, FormFooter,
-    InputUsername,
-    InputPassword,
-    RememberLabel,
+    InputText,
     InputRemember,
-    InputSubmit
+    InputSubmit,
+    RememberLabel,
+    RememberContainer,
+    SubmitContainer,
 } from './style';
 
 const handleChange = (name) => {
@@ -30,17 +31,28 @@ export default class LoginDialog extends React.Component {
         };
     }
 
-    handleLogin = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
+
         this.setState({
             error: {}
         });
 
         const { username, password, remember } = this.state;
 
-        if (!this.props.onSubmit)
-            return false;
+        const callback =
+            (event.target === this.login
+                || event.target === this.form)
+                ? this.props.onLogin
+                : (event.target === this.register)
+                    ? this.props.onRegister
+                    : undefined;
 
-        return this.props.onSubmit(
+        if (!callback) {
+            return false;
+        }
+
+        return callback(
             username, password, remember
         );
     }
@@ -58,27 +70,41 @@ export default class LoginDialog extends React.Component {
         return (
             <Form
                 noValidate
-                onSubmit={this.handleLogin}
+                onSubmit={this.handleSubmit}
+                visible={this.props.visible}
+                ref={r => this.form = r}
             >
-                <InputUsername
+                <InputText
                     placeholder="Username"
                     onChange={this.handleUsername}
                 />
-                <InputPassword
+                <InputText
                     placeholder="Password"
+                    type="password"
                     onChange={this.handlePassword}
                 />
                 <FormFooter>
-                    <RememberLabel>
+                    <RememberContainer>
                         <InputRemember
                             checked={this.state.remember}
                             onChange={this.handleRemember}
                         />
-                        Remember me
-                    </RememberLabel>
-                    <InputSubmit
-                        value="Log in"
-                    />
+                        <RememberLabel>
+                            Remember me
+                        </RememberLabel>
+                    </RememberContainer>
+                    <SubmitContainer>
+                        <InputSubmit
+                            value="Sign in"
+                            type="submit"
+                            ref={r => this.login = r}
+                        />
+                        <InputSubmit
+                            value="Register"
+                            onClick={this.handleSubmit}
+                            ref={r => this.register = r}
+                        />
+                    </SubmitContainer>
                 </FormFooter>
             </Form>
         );

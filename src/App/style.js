@@ -4,8 +4,10 @@ const grid = 10;
 
 export const AppContainer = styled.div`
     background-color: #282c34;
+    width: 100vw;
+    height: 100vh;
+
     text-align: center;
-    min-height: 100vh;
 `;
 
 export const BoardWrapper = styled.div`
@@ -14,4 +16,7 @@ export const BoardWrapper = styled.div`
     align-items: center;
     font-size: calc(10px + 2vmin);
     color: white;
+
+    height: calc(100vh - 50px);
+    overflow: auto;
 `;

@@ -17,6 +17,7 @@ export const BoardHeader = styled.header`
 
 export const BoardHeaderTitle = styled(EditableText)`
     font-size: 2rem;
+    margin-top: ${grid}px;
 `;
 
 export const BoardLists = styled.div`
