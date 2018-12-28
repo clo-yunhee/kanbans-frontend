@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const NavContainer = styled.nav`
     position: relative;
-    z-index: 1;
+    z-index: 2000;
 
     width: 100vw;
     height: 50px;

@@ -21,6 +21,7 @@ export const ListContainer = styled.div`
 
     font-size: 1rem;
 
+    box-sizing: border-box;
     box-shadow: ${({ isDragging }) =>
         isDragging ? '2px 2px 1px rgba(0,0,0,0.2)' : 'none'};
     border: 1px #282c34 solid;
@@ -40,6 +41,9 @@ export const ListHeader = styled.header`
 
     background-color: ${({ isDragging }) =>
         isDragging ? '#d9fcff' : 'lightblue'};
+
+    box-shadow: 0px ${grid/2}px ${grid/2}px rgba(0,0,0,0.2);
+    z-index: 1;
 
     &:hover {
         background-color: #d9fcff;
