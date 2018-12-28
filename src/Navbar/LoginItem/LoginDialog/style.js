@@ -1,20 +1,21 @@
 import styled from 'styled-components';
 
+import LoadingWheel from '../../../LoadingWheel';
+
 const maxLength = 30;
 
 const radius = 4;
 const grid = 10;
 
-export const Form = styled.form`
+export const FormWrapper = styled.div`
+    display: ${({ visible }) =>
+        visible ? 'block' : 'none'};
+
     background-color: #f091f0;
 
     border-radius: ${radius}px;
     font-size: 1rem;
     color: #3c3c3c;
-
-    display: ${({ visible }) => visible ? 'flex' : 'none'};
-    flex-direction: column;
-    align-items: center;
 
     position: absolute;
     right: 0;
@@ -23,6 +24,24 @@ export const Form = styled.form`
     padding: ${grid}px;
 
     user-select: none;
+`;
+
+export const LoadingOverlay = styled(LoadingWheel)`
+    /* For centering */
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+`;
+
+export const Form = styled.form`
+    visibility: ${({ isLoading }) =>
+        isLoading ? 'hidden' : 'visible'};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 export const Input = styled.input`
@@ -87,7 +106,7 @@ export const InputSubmit = styled(Input).attrs({
         transform: translateY(2px);
     }
 
-    transition: transform ease-in-out 0.1s;
+    transition: transform ease 0.05s;
 `;
 
 

@@ -7,5 +7,5 @@ export const Container = styled.div`
 
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
 `;

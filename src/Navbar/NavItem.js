@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const NavItem = styled.button`
-    display: block;
+    display: inline-block;
     height: 100%;
     border: none;
     color: white;
     padding: 14px 28px;
     font-size: 1rem;
-    cursor: pointer;
+    cursor: ${({ noPointer }) =>
+        noPointer ? 'inherit' : 'pointer'};
     text-align: center;
     text-shadow: 1px 1px rgba(0,0,0,0.1);
 
