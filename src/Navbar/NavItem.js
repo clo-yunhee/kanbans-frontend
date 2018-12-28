@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { sans } from '../fonts';
 
 const NavItem = styled.button`
     display: inline-block;
@@ -6,6 +7,7 @@ const NavItem = styled.button`
     border: none;
     color: white;
     padding: 6px 12px;
+    ${sans}
     font-size: 1rem;
     cursor: ${({ noPointer }) =>
         noPointer ? 'inherit' : 'pointer'};

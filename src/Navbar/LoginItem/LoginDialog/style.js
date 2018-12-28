@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { sans } from '../../../fonts';
 
 import LoadingWheel from '../../../LoadingWheel';
 
@@ -76,6 +77,7 @@ export const RememberContainer = styled.div`
 export const RememberLabel = styled.label.attrs({
     htmlFor: "login-remember"
 })`
+    ${sans}
     font-size: 0.85rem;
     padding-left: ${grid/2}px;
 `;
@@ -98,6 +100,9 @@ export const SubmitContainer = styled.div`
 export const InputSubmit = styled(Input).attrs({
     type: "button"
 })`
+    ${sans}
+    font-size: 0.9rem;
+
     margin-left: ${grid/2}px;
     margin-right: ${grid/2}px;
 

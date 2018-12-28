@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { sans, serif } from '../fonts';
 
 import EditableText from '../EditableText';
 
@@ -20,8 +21,6 @@ export const ItemContainer = styled.div`
     color: #4d4d4d;
     text-align: left;
 
-    font-size: 1rem;
-
     &:hover,
     &:active {
         color: #4d4d4d;
@@ -39,9 +38,12 @@ export const ItemContent = styled(EditableText)`
     padding-left: ${grid}px;
 
     min-height: 1rem;
+
+    ${serif}
 `;
 
 export const ItemFooter = styled.footer`
+    ${sans}
     font-size: 0.75rem;
 
     display: flex;

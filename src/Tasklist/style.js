@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { serif } from '../fonts';
 
 import EditableText from '../EditableText';
 
@@ -48,12 +49,12 @@ export const ListHeaderTitle = styled(EditableText)`
 
     width: 100%;
 
+    ${serif}
     font-size: 1.5rem;
     font-weight: bold;
     color: #172b4d;
 
     min-height: 1rem;
-
 `;
 
 export const ListHeaderDrag = styled.span`
@@ -96,4 +97,6 @@ export const ListItems = styled.div`
     min-width: ${listWidth};
 
     min-height: ${listHeight};
+
+    ${serif}
 `;
