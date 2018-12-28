@@ -5,7 +5,7 @@ const NavItem = styled.button`
     height: 100%;
     border: none;
     color: white;
-    padding: 14px 28px;
+    padding: 6px 12px;
     font-size: 1rem;
     cursor: ${({ noPointer }) =>
         noPointer ? 'inherit' : 'pointer'};
@@ -23,6 +23,8 @@ const NavItem = styled.button`
     &:hover {
         background-color: #6f40c2;
         box-shadow: 0px 0px 2px 4px rgba(0,0,0,0.2);
+        /* The shadow won't get hidden by the surrounding items */
+        z-index: 3;
     }
 `;
 

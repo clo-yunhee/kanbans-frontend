@@ -3,8 +3,6 @@ import React from 'react';
 import NavItem from '../NavItem';
 import LoadingWheel from '../../LoadingWheel';
 
-import { LogoutContainer } from './style';
-
 import { logoutUser, getToken, getUsername } from '../../users';
 
 export default class LogoutItem extends React.Component {

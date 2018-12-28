@@ -5,7 +5,7 @@ import LoginDialog from './LoginDialog';
 
 import { LoginContainer } from './style';
 
-import { loginUser, registerUser, setToken } from '../../users';
+import { loginUser, registerUser } from '../../users';
 
 export default class LoginItem extends React.Component {
 

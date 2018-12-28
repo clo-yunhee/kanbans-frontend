@@ -13,4 +13,8 @@ export const NavContainer = styled.nav`
 
     display: flex;
     flex-direction: row;
+
+    box-sizing: border-box;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16),
+                0px 2px 10px 0px rgba(0,0,0,0.12);
 `;

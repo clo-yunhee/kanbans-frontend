@@ -1,7 +1,5 @@
 import React from 'react';
 
-import NavItem from '../NavItem';
-
 import LoginItem from '../LoginItem';
 import LogoutItem from '../LogoutItem';
 
