@@ -7,12 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
-import { restoreToken } from './users';
-
 JavascriptTimeAgo.locale(en);
-
-// Restore session token if it's persisted.
-restoreToken();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

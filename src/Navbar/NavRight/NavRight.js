@@ -9,8 +9,12 @@ import {
     Container
 } from './style';
 
-import { storeToken, clearToken } from '../../users';
-
+import {
+    getPersistedToken,
+    storeToken,
+    clearToken,
+    validateToken,
+} from '../../users';
 
 export default class NavRight extends React.Component {
 
@@ -20,6 +24,27 @@ export default class NavRight extends React.Component {
         this.state = {
             loggedIn: false
         };
+    }
+
+    componentDidMount() {
+        // re-log if the token is persisted
+        const token = getPersistedToken();
+        if (token === null) {
+            return;
+        }
+
+        validateToken(token, payload => {
+            if (!payload.valid) {
+                // fail silently if the token is invalid
+                clearToken();
+                return;
+            }
+
+            storeToken(payload, true);
+            this.setState({
+                loggedIn: true
+            });
+        });
     }
 
     handleLoggedIn = (payload, remember) => {

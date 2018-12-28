@@ -9,6 +9,10 @@ export function getUsername() {
     return sessionStorage.getItem(usernameKey);
 }
 
+export function getPersistedToken() {
+    return localStorage.getItem(tokenKey);
+}
+
 function setToken(token, remember) {
     sessionStorage.setItem(tokenKey, token);
     if (remember) {
@@ -31,11 +35,4 @@ export function clearToken() {
     localStorage.removeItem(tokenKey);
 }
 
-export function restoreToken() {
-    const token = localStorage.getItem(tokenKey);
-    if (token !== null) {
-        sessionStorage.setItem(tokenKey, token);
-        //todo: fetch username
-        sessionStorage.setItem(usernameKey, "Rika(tmp)");
-    }
-}
+

@@ -1,12 +1,16 @@
 import { requestPOST, defaultHost } from '../utils';
 
-export function logoutUser(payload, resolve, reject) {
+export function validateToken(token, resolve, reject) {
+    const payload = {
+        sessionToken: token
+    };
+
     return requestPOST(
-        defaultHost + 'api/user/logout',
+        defaultHost + 'api/user/reauth',
         payload,
         resData => {
             if (resData.error) {
-                console.log(`Logout request failed: ${resData.msg}`);
+                console.log(`Validating token failed: ${resData.msg}`);
                 reject(resData.msg);
                 return;
             }
