@@ -1,14 +1,18 @@
 import styled from 'styled-components';
-import { sans, serif } from '../fonts';
+import { serif } from '../fonts';
 
 import EditableText from '../EditableText';
 
 const grid = 10;
 
 export const BoardContainer = styled.div`
-    height ${({ height }) => height};
-    overflow-x: hidden;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+    margin: 0;
+    padding: 0;
 
     font-size: 1rem;
 `;
@@ -25,6 +29,6 @@ export const BoardHeaderTitle = styled(EditableText)`
 export const BoardLists = styled.div`
     margin: ${grid}px;
     display: flex;
-    ${sans}
+    justify-content: center;
 `;
 

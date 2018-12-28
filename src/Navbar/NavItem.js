@@ -6,6 +6,7 @@ const NavItem = styled.button`
     height: 100%;
     border: none;
     color: white;
+    margin: 0;
     padding: 6px 12px;
     ${sans}
     font-size: 1rem;

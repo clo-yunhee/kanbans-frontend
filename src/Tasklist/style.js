@@ -6,14 +6,17 @@ import EditableText from '../EditableText';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
-const listWidth = '200px';
-const listHeight = '300px';
 const grid = 6;
 const radius = 3;
 
+const minWidth = '200px';
+
+const minHeight = `calc(5rem + 2px)`;
+const maxHeight = '60vh';
+
 export const ListContainer = styled.div`
     margin: ${grid}px;
-    display : flex;
+    display: flex;
     flex-direction: column;
 
     font-size: 1rem;
@@ -71,15 +74,13 @@ export const ListHeaderDrag = styled.span`
     &:hover {
         background-color: #89c7db;
     }
-
 `;
 
 export const ListScrollContainer = styled(PerfectScrollbar)`
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: ${listHeight};
 
-    padding-bottom: ${grid}px;
+    max-height: ${maxHeight};
 `;
 
 export const ListItems = styled.div`
@@ -89,14 +90,14 @@ export const ListItems = styled.div`
     flex-direction: column;
     opacity: ${({ isDropDisabled }) =>
         isDropDisabled ? 0.5 : 'inherit'};
-    padding: ${grid}px;
     border: ${grid}px;
+    padding: ${grid}px;
     padding-bottom: 0;
-    transition: background-color 0.1s ease, opacity 0.1s ease;
+    transition: background-color 0.2s ease, opacity 0.1s ease;
     user-select: none;
-    min-width: ${listWidth};
 
-    min-height: ${listHeight};
+    min-width: ${minWidth};
+    min-height: ${minHeight};
 
     ${serif}
 `;
