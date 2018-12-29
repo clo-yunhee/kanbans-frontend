@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Draggable } from 'react-beautiful-dnd';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import TimeAgo from 'react-time-ago/no-tooltip';
 import { convenient } from 'javascript-time-ago/gradation';
 
-import 'react-perfect-scrollbar/dist/css/styles.css';
-
-import { ItemContainer, ItemContent, ItemFooter } from './style';
+import { ItemContainer, ItemContentScroll,
+         ItemContent, ItemFooter } from './style';
 
 import { updateItem } from '../update';
 import { extractProps } from '../utils';
@@ -42,7 +40,7 @@ export default class Taskitem extends React.Component {
 
         const body = (
             <React.Fragment>
-                <PerfectScrollbar>
+                <ItemContentScroll>
                     <ItemContent
                         multiLine={true}
                         onChange={this.handleChange}
@@ -50,7 +48,7 @@ export default class Taskitem extends React.Component {
                     >
                         {content}
                     </ItemContent>
-                </PerfectScrollbar>
+                </ItemContentScroll>
                 <ItemFooter>
                     <div>
                         Created <TimeAgo timeStyle={createdTimeStyle}>{createdOnDate}</TimeAgo>

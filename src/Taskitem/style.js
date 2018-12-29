@@ -3,6 +3,9 @@ import { sans, serif } from '../fonts';
 
 import EditableText from '../EditableText';
 
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
 const grid = 6;
 const radius = 3;
 
@@ -14,13 +17,13 @@ export const ItemContainer = styled.div`
     box-shadow: ${({ isDragging }) =>
         isDragging ? `2px 2px 1px rgba(0,0,0,0.2)` : 'none'};
     padding: ${grid}px;
-    min-height: 40px;
     margin-top: ${grid/2}px;
     margin-bottom: ${grid/2}px;
     user-select: none;
 
     color: #4d4d4d;
     text-align: left;
+    ${serif}
 
     &:hover,
     &:active {
@@ -32,15 +35,14 @@ export const ItemContainer = styled.div`
     flex-direction: column;
 `;
 
+export const ItemContentScroll = styled(PerfectScrollbar)`
+    overflow: hidden;
+    min-height: calc(1rem + ${grid}px);
+    max-height: 6rem;
+`;
+
 export const ItemContent = styled(EditableText)`
-    flex-grow: 1;
-    flex-basis: 100%;
-
     padding-left: ${grid}px;
-
-    min-height: 1rem;
-
-    ${serif}
 `;
 
 export const ItemFooter = styled.footer`

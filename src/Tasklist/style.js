@@ -14,6 +14,8 @@ export const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
 
+    max-height: calc(100vh - 50px - 10em);
+
     font-size: 1rem;
 
     box-sizing: border-box;
@@ -78,9 +80,12 @@ export const ListHeaderDrag = styled.div.attrs({
     }
 `;
 
-export const ListItems = styled(PerfectScrollbar)`
-    overflow-x: hidden;
-    overflow-y: auto;
+export const ListItems = styled(PerfectScrollbar).attrs({
+    option: {
+        suppressScrollX: true
+    }
+})`
+    overflow: hidden;
 
     background-color: ${({ isDraggingOver }) =>
         isDraggingOver ? '#d9fcff' : 'lightblue'};

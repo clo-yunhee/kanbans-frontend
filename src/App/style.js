@@ -12,7 +12,11 @@ export const AppContainer = styled.div`
     text-align: center;
 `;
 
-export const BoardWrapper = styled(PerfectScrollbar)`
+export const BoardWrapper = styled(PerfectScrollbar).attrs({
+    option: {
+        suppressScrollY: true
+    },
+})`
     display: flex;
     flex-direction: column;
     align-items: center;
