@@ -15,7 +15,8 @@ export const ItemContainer = styled.div`
         isDragging ? `2px 2px 1px rgba(0,0,0,0.2)` : 'none'};
     padding: ${grid}px;
     min-height: 40px;
-    margin-bottom: ${grid}px;
+    margin-top: ${grid/2}px;
+    margin-bottom: ${grid/2}px;
     user-select: none;
 
     color: #4d4d4d;

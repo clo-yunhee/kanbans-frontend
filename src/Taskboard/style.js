@@ -28,7 +28,9 @@ export const BoardHeaderTitle = styled(EditableText)`
 
 export const BoardLists = styled.div`
     margin: ${grid}px;
+
     display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: center;
 `;
-

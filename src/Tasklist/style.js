@@ -9,11 +9,6 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 const grid = 6;
 const radius = 3;
 
-const minWidth = '200px';
-
-const minHeight = `calc(5rem + 2px)`;
-const maxHeight = '60vh';
-
 export const ListContainer = styled.div`
     margin: ${grid}px;
     display: flex;
@@ -30,10 +25,14 @@ export const ListContainer = styled.div`
  `;
 
 export const ListHeader = styled.header`
+    flex-grow: 0;
+    flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     border-top-left-radius: ${radius}px;
     border-top-right-radius: ${radius}px;
     transition: background-color 0.2s ease;
@@ -41,9 +40,6 @@ export const ListHeader = styled.header`
 
     background-color: ${({ isDragging }) =>
         isDragging ? '#d9fcff' : 'lightblue'};
-
-    box-shadow: 0px ${grid/2}px ${grid/2}px rgba(0,0,0,0.2);
-    z-index: 1;
 
     &:hover {
         background-color: #d9fcff;
@@ -64,7 +60,9 @@ export const ListHeaderTitle = styled(EditableText)`
     min-height: 1rem;
 `;
 
-export const ListHeaderDrag = styled.span`
+export const ListHeaderDrag = styled.div.attrs({
+    title: "Move list"
+})`
     width: 100%;
     height: 1rem;
 
@@ -80,28 +78,63 @@ export const ListHeaderDrag = styled.span`
     }
 `;
 
-export const ListScrollContainer = styled(PerfectScrollbar)`
+export const ListItems = styled(PerfectScrollbar)`
     overflow-x: hidden;
     overflow-y: auto;
 
-    max-height: ${maxHeight};
-`;
-
-export const ListItems = styled.div`
     background-color: ${({ isDraggingOver }) =>
         isDraggingOver ? '#d9fcff' : 'lightblue'};
+
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+
+    padding: ${grid/2}px ${grid}px;
+    min-width: 180px;
+    min-height: 2rem;
+
+    box-shadow: inset 0px ${grid/2}px ${grid/2}px rgba(0,0,0,0.12),
+                inset 0px -${grid/2}px ${grid/2}px rgba(0,0,0,0.12);
+
     opacity: ${({ isDropDisabled }) =>
         isDropDisabled ? 0.5 : 'inherit'};
-    border: ${grid}px;
-    padding: ${grid}px;
-    padding-bottom: 0;
-    transition: background-color 0.2s ease, opacity 0.1s ease;
+    transition: background-color 0.2s ease,
+                opacity 0.1s ease;
     user-select: none;
-
-    min-width: ${minWidth};
-    min-height: ${minHeight};
 
     ${serif}
 `;
+
+export const ListFooter = styled.div`
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ListFooterNewItem = styled.button.attrs({
+    children: "+",
+    title: "Add new item"
+})`
+    display: flex;
+    width: 100%;
+    height: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    color: #3c3c3c;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s ease;
+
+    background-color: #add8e6;
+
+    &:hover, &:active {
+        background-color: #89c7db;
+    }
+`

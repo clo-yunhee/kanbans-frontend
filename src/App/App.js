@@ -2,6 +2,7 @@ import React from 'react';
 
 import Navbar from '../Navbar';
 import Taskboard from '../Taskboard';
+import LoadingWheel from '../LoadingWheel';
 
 import { AppContainer, BoardWrapper } from './style';
 
@@ -11,18 +12,21 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            board: <LoadingWheel />
+        };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let { data, id } = this.props;
 
         if (data) {
-            this.setState({board:
-                <Taskboard
-                    key={data._id}
-                    data={data}
-                />
+            this.setState({
+                board:
+                    <Taskboard
+                        key={data._id}
+                        data={data}
+                    />
             });
         } else {
             if (!id) {
@@ -30,11 +34,12 @@ export default class App extends React.Component {
             }
 
             fetchBoard(data => {
-                this.setState({board:
-                    <Taskboard
-                        key={id}
-                        data={data}
-                    />
+                this.setState({
+                    board:
+                        <Taskboard
+                            key={id}
+                            data={data}
+                        />
                 });
             }, id);
        }

@@ -83,4 +83,24 @@ export default class Taskitem extends React.Component {
             </Draggable>
         );
     }
+
+    static mockItem(listId) {
+        return (
+            <ItemContainer
+                key={`mock-${listId}`}
+                style={{visibility: 'hidden'}}
+            >
+                <ItemContent as="div">
+                    Mock item
+                </ItemContent>
+                <ItemFooter>
+                    <div>Mock item</div>
+                    <div>Mock item</div>
+                </ItemFooter>
+            </ItemContainer>
+        )
+    }
+
 }
+
+

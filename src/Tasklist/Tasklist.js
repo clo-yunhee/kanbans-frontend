@@ -7,7 +7,8 @@ import Taskitem from '../Taskitem';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import { ListContainer, ListHeader, ListHeaderTitle,
-         ListHeaderDrag, ListScrollContainer, ListItems } from './style';
+         ListHeaderDrag, ListItems,
+         ListFooter, ListFooterNewItem } from './style';
 
 import { updateList } from '../update';
 import { extractProps } from '../utils';
@@ -31,10 +32,10 @@ export default class Tasklist extends React.Component {
         );
     }
 
-    renderOrderedItems(items) {
+    renderOrderedItems(items, isDraggingOver) {
         let list = [];
 
-        if (items) {
+        if (Array.isArray(items) && items.length > 0) {
             items.forEach(item => {
                 list[item.listIndex] = (
                     <Taskitem
@@ -43,6 +44,9 @@ export default class Tasklist extends React.Component {
                     />
                 );
             });
+        } else if (!isDraggingOver) {
+            // placeholder item
+            list.push(Taskitem.mockItem(this.props.data._id));
         }
 
         return list;
@@ -80,23 +84,24 @@ export default class Tasklist extends React.Component {
                                 {listName}
                             </ListHeaderTitle>
                         </ListHeader>
-                        <ListScrollContainer>
-                            <Droppable
-                                type="ITEM"
-                                droppableId={"L\\" + _id}
-                            >
-                                {(dropProvided, dropSnapshot) => (
-                                    <ListItems
-                                        ref={dropProvided.innerRef}
-                                        {...dropProvided.droppableProps}
-                                        isDraggingOver={dropSnapshot.isDraggingOver}
-                                    >
-                                        {this.renderOrderedItems(items)}
-                                        {dropProvided.placeholder}
-                                    </ListItems>
-                                )}
-                            </Droppable>
-                        </ListScrollContainer>
+                        <Droppable
+                            type="ITEM"
+                            droppableId={"L\\" + _id}
+                        >
+                            {(dropProvided, dropSnapshot) => (
+                                <ListItems
+                                    containerRef={dropProvided.innerRef}
+                                    {...dropProvided.droppableProps}
+                                    isDraggingOver={dropSnapshot.isDraggingOver}
+                                >
+                                    {this.renderOrderedItems(items, dropSnapshot.isDraggingOver)}
+                                    {dropProvided.placeholder}
+                                </ListItems>
+                            )}
+                        </Droppable>
+                        <ListFooter>
+                            <ListFooterNewItem />
+                        </ListFooter>
                     </ListContainer>
                 }
             </Draggable>
