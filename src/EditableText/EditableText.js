@@ -15,9 +15,11 @@ export default class EditableText extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            focused: false,
-        }
+        this.state = {};
+    }
+
+    grabFocus = () => {
+        this.ref.focus();
     }
 
     updateLater = updateLater.bind(this)
@@ -41,11 +43,12 @@ export default class EditableText extends React.Component {
             <StyledEditable
                 editable={true}
                 multiLine={this.props.multiLine}
-                sanitise={false}
+                sanitise={true}
                 content={this.props.children}
                 onChange={this.handleChange}
                 className={this.props.className}
                 onDrop={this.handleDrop}
+                ref={r => this.ref = r}
             />
         );
     }

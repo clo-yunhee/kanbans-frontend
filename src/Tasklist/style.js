@@ -3,9 +3,6 @@ import { serif } from '../fonts';
 
 import EditableText from '../EditableText';
 
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-
 const grid = 6;
 const radius = 3;
 
@@ -14,9 +11,9 @@ export const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
 
-    max-height: calc(100vh - 50px - 10em);
-
     font-size: 1rem;
+
+    max-height: calc(100vh - 50px - 10em);
 
     box-sizing: border-box;
     box-shadow: ${({ isDragging }) =>
@@ -43,6 +40,9 @@ export const ListHeader = styled.header`
     background-color: ${({ isDragging }) =>
         isDragging ? '#d9fcff' : 'lightblue'};
 
+    box-shadow: 0px 0px ${grid}px rgba(0,0,0,0.3);
+    z-index: 1;
+
     &:hover {
         background-color: #d9fcff;
     }
@@ -55,7 +55,7 @@ export const ListHeaderTitle = styled(EditableText)`
     width: 100%;
 
     ${serif}
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #172b4d;
 
@@ -78,15 +78,9 @@ export const ListHeaderDrag = styled.div.attrs({
     &:hover {
         background-color: #89c7db;
     }
-`;
+`
 
-export const ListItems = styled(PerfectScrollbar).attrs({
-    option: {
-        suppressScrollX: true
-    }
-})`
-    overflow: hidden;
-
+export const ListItems = styled.div`
     background-color: ${({ isDraggingOver }) =>
         isDraggingOver ? '#d9fcff' : 'lightblue'};
 
@@ -94,12 +88,26 @@ export const ListItems = styled(PerfectScrollbar).attrs({
     flex-direction: column;
     justify-content: flex-start;
 
-    padding: ${grid/2}px ${grid}px;
-    min-width: 180px;
+    overflow-x: hidden;
+
+    padding: 0;
+
+    /* Better top-bottom padding to avoid shrinking */
+    &::before, &::after {
+        flex-shrink: 0;
+
+        content: '';
+        display: inline-block;
+        visibility: hidden;
+        width: 100%;
+        height: ${grid/2}px;
+        z-index: 4;
+    }
+
+    min-width: 220px;
     min-height: 2rem;
 
-    box-shadow: inset 0px ${grid/2}px ${grid/2}px rgba(0,0,0,0.12),
-                inset 0px -${grid/2}px ${grid/2}px rgba(0,0,0,0.12);
+    box-sizing: border-box;
 
     opacity: ${({ isDropDisabled }) =>
         isDropDisabled ? 0.5 : 'inherit'};
@@ -118,6 +126,9 @@ export const ListFooter = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    box-shadow: 0px 0px ${grid}px rgba(0,0,0,0.3);
+    z-index: 1;
 `;
 
 export const ListFooterNewItem = styled.button.attrs({
@@ -131,15 +142,22 @@ export const ListFooterNewItem = styled.button.attrs({
     font-weight: bold;
     border: none;
     color: #3c3c3c;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
     align-items: center;
     justify-content: center;
 
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease,
+                padding 0.05s ease;
 
     background-color: #add8e6;
 
     &:hover, &:active {
         background-color: #89c7db;
+    }
+
+    &:active {
+        padding-top: 0.2rem;
     }
 `

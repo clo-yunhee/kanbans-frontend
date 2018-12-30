@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { sans } from '../fonts';
 
 const NavItem = styled.button`
-    display: inline-block;
+    display: flex;
     height: 100%;
     border: none;
     color: white;
@@ -12,7 +12,8 @@ const NavItem = styled.button`
     font-size: 1rem;
     cursor: ${({ noPointer }) =>
         noPointer ? 'inherit' : 'pointer'};
-    text-align: center;
+    align-items: center;
+    justify-content: center;
     text-shadow: 1px 1px rgba(0,0,0,0.1);
 
     background-color: ${({ expanded }) =>

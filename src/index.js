@@ -9,9 +9,12 @@ import en from 'javascript-time-ago/locale/en';
 
 JavascriptTimeAgo.locale(en);
 
+//*
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
-/*
+/*/
+
 const data = {
     _id: 'board0',
     boardName: 'Board Name',
@@ -66,7 +69,8 @@ const data = {
 };
 
 ReactDOM.render(<App data={data} />, document.getElementById('root'));
-*/
+//*/
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

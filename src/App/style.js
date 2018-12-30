@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
-
 export const AppContainer = styled.div`
     background-color: #282c34;
     width: 100vw;
@@ -12,11 +9,7 @@ export const AppContainer = styled.div`
     text-align: center;
 `;
 
-export const BoardWrapper = styled(PerfectScrollbar).attrs({
-    option: {
-        suppressScrollY: true
-    },
-})`
+export const BoardWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

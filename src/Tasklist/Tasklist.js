@@ -4,26 +4,54 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Taskitem from '../Taskitem';
 
-import 'react-perfect-scrollbar/dist/css/styles.css';
-
 import { ListContainer, ListHeader, ListHeaderTitle,
          ListHeaderDrag, ListItems,
          ListFooter, ListFooterNewItem } from './style';
 
 import { updateList } from '../update';
-import { extractProps } from '../utils';
+import { createItem } from '../create';
+import { deleteItem } from '../delete';
 
 export default class Tasklist extends React.Component {
 
-    handleChange = (value) => {
-        this.props.data.listName = value;
+    handleUpdate = (value) => {
+        const { _id, boardId } = this.props.data;
+
+        const payload = {
+            _id: _id,
+            boardId: boardId,
+            listName: value,
+        }
+
+        updateList(payload, ({ listName }) => {
+            this.props.data.listName = listName;
+            this.forceUpdate();
+        });
     }
 
-    handleUpdate = (value) => {
-        updateList(extractProps(
-            ['_id', 'boardId', 'listName'],
-            this.props.data
-        ));
+    handleNewItem = () => {
+        const payload = {
+            listId: this.props.data._id,
+            content: '',
+            listIndex: this.props.data.items.length,
+        };
+
+        createItem(payload, newItems => {
+            this.props.data.items = newItems;
+            this.forceUpdate();
+        });
+    }
+
+    handleDelete = (item) => {
+        const payload = {
+            _id: item._id,
+            listId: this.props.data._id,
+        };
+
+        deleteItem(payload, newItems => {
+            this.props.data.items = newItems;
+            this.forceUpdate();
+        });
     }
 
     findItem = (id) => {
@@ -41,6 +69,7 @@ export default class Tasklist extends React.Component {
                     <Taskitem
                         key={item._id}
                         data={item}
+                        onDelete={this.handleDelete}
                     />
                 );
             });
@@ -90,7 +119,7 @@ export default class Tasklist extends React.Component {
                         >
                             {(dropProvided, dropSnapshot) => (
                                 <ListItems
-                                    containerRef={dropProvided.innerRef}
+                                    ref={dropProvided.innerRef}
                                     {...dropProvided.droppableProps}
                                     isDraggingOver={dropSnapshot.isDraggingOver}
                                 >
@@ -100,7 +129,7 @@ export default class Tasklist extends React.Component {
                             )}
                         </Droppable>
                         <ListFooter>
-                            <ListFooterNewItem />
+                            <ListFooterNewItem onClick={this.handleNewItem} />
                         </ListFooter>
                     </ListContainer>
                 }

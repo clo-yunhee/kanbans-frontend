@@ -10,19 +10,20 @@ import { BoardContainer, BoardHeader,
          BoardHeaderTitle, BoardLists } from './style';
 
 import { updateBoard } from '../update';
-import { extractProps } from '../utils';
 
 export default class Taskboard extends React.Component {
 
-    handleChange = (value) => {
-        this.props.data.boardName = value;
-    }
-
     handleUpdate = (value) => {
-        updateBoard(extractProps(
-            ['_id', 'boardName'],
-            this.props.data
-        ));
+        const { _id } = this.props.data;
+
+        const payload = {
+            _id: _id,
+            boardName: value,
+        };
+
+        updateBoard(payload, ({ boardName }) => {
+            this.props.data.boardName = boardName;
+        });
     }
 
     findList = (id) => {
