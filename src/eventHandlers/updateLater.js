@@ -9,6 +9,6 @@ export default function updateLater(name, callback) {
 
     this.state = {
         ...this.state,
-        [sKey]: setTimeout(callback, 1000)
+        [sKey]: setTimeout(callback, 300)
     };
 }
