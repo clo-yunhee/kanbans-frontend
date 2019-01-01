@@ -58,6 +58,7 @@ export const ListHeaderTitle = styled(EditableText)`
     font-size: 1.4rem;
     font-weight: bold;
     color: #172b4d;
+    text-align: center;
 
     min-height: 1rem;
 `;
@@ -88,7 +89,7 @@ export const ListItems = styled.div`
     flex-direction: column;
     justify-content: flex-start;
 
-    overflow-x: hidden;
+    overflow: hidden scroll;
 
     padding: 0;
 

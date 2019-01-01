@@ -8,11 +8,23 @@ import { ListContainer, ListHeader, ListHeaderTitle,
          ListHeaderDrag, ListItems,
          ListFooter, ListFooterNewItem } from './style';
 
-import { updateList } from '../update';
+import { editList } from '../edit';
 import { createItem } from '../create';
 import { deleteItem } from '../delete';
 
+function sortItemsByIndex(items) {
+    items.sort((a, b) => a.listIndex - b.listIndex);
+}
+
 export default class Tasklist extends React.Component {
+
+    componentDidMount() {
+        sortItemsByIndex(this.props.data.items);
+    }
+
+    componentDidUpdate() {
+        sortItemsByIndex(this.props.data.items);
+    }
 
     handleUpdate = (value) => {
         const { _id, boardId } = this.props.data;
@@ -23,8 +35,13 @@ export default class Tasklist extends React.Component {
             listName: value,
         }
 
-        updateList(payload, ({ listName }) => {
-            this.props.data.listName = listName;
+        const prev = this.props.data.listName;
+
+        this.props.data.listName = value;
+        this.forceUpdate();
+
+        editList(payload, msg => {
+            this.props.data.listName = prev;
             this.forceUpdate();
         });
     }
@@ -73,7 +90,9 @@ export default class Tasklist extends React.Component {
                     />
                 );
             });
-        } else if (!isDraggingOver) {
+        }
+
+        if (items.length === 0 && !isDraggingOver) {
             // placeholder item
             list.push(Taskitem.mockItem(this.props.data._id));
         }
@@ -105,6 +124,7 @@ export default class Tasklist extends React.Component {
                                 {...provided.dragHandleProps}
                             />
                             <ListHeaderTitle
+                                placeholder="List name"
                                 multiLine={false}
                                 onChange={this.handleChange}
                                 onUpdate={this.handleUpdate}

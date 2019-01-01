@@ -36,7 +36,7 @@ export const ItemContainer = styled.div`
 export const ItemContent = styled(EditableText)`
     width: calc(100% - ${grid}px);
     height: 100%;
-    padding-left: ${grid}px;
+    margin-left: ${grid}px;
 
     min-height: calc(1rem + ${grid}px);
     max-height: 6rem;

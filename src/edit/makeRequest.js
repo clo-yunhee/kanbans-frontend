@@ -1,15 +1,14 @@
 import { requestPOST, defaultHost } from '../utils';
 
 export default function makeRequest(name, url) {
-    return function(data, callback) {
+    return function(data, errorCallback) {
         return requestPOST(defaultHost + url, data, resData => {
             if (resData.error) {
-                console.error(`Updating ${name} failed: ${resData.msg}`);
-                return;
-            }
+                console.error(`Editing ${name} failed: ${resData.msg}`);
 
-            if (callback) {
-                callback(resData.res);
+                if (errorCallback) {
+                    errorCallback(resData.msg);
+                }
             }
         });
     }

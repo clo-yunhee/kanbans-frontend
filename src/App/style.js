@@ -15,6 +15,8 @@ export const BoardWrapper = styled.div`
     align-items: center;
     color: white;
 
-    max-width: 100vw;
-    max-height: calc(100vh - 50px);
+    width: 100vw;
+    height: calc(100vh - 50px);
+
+    overflow: hidden;
 `;

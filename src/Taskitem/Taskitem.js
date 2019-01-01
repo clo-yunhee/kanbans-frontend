@@ -9,7 +9,7 @@ import ItemContextMenu from './ItemContextMenu';
 
 import { ItemContainer, ItemContent, ItemFooter } from './style';
 
-import { updateItem } from '../update';
+import { editItem } from '../edit';
 
 export default class Taskitem extends React.Component {
 
@@ -22,8 +22,14 @@ export default class Taskitem extends React.Component {
             content: value,
         };
 
-        updateItem(payload, ({ content }) => {
-            this.props.data.content = content;
+        const prev = this.props.data.content;
+
+        this.props.data.content = value;
+        this.forceUpdate();
+
+        editItem(payload, msg => {
+            this.props.data.content = prev;
+            this.forceUpdate();
         });
     }
 
@@ -51,6 +57,7 @@ export default class Taskitem extends React.Component {
             <React.Fragment>
                 <div>
                     <ItemContent
+                        placeholder="Item content"
                         multiLine={true}
                         onChange={this.handleChange}
                         onUpdate={this.handleUpdate}

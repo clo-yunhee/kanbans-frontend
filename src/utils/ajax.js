@@ -9,7 +9,13 @@ function handleErrors(response) {
 }
 
 function json(response) {
-    return response.json();
+    return response.text().then(resText => {
+        try {
+            return JSON.parse(resText);
+        } catch (err) {
+            throw new Error(resText);
+        }
+    });
 }
 
 function logError(err) {

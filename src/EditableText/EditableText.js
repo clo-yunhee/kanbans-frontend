@@ -9,6 +9,14 @@ const StyledEditable = styled(ContentEditable).attrs({
     editable: true
 })`
     cursor: text;
+    user-select: text;
+
+    &:empty::before {
+        content: attr(placeholder);
+        display: block;
+        font-style: italic;
+        opacity: 0.5;
+    }
 `;
 
 export default class EditableText extends React.Component {
@@ -45,6 +53,7 @@ export default class EditableText extends React.Component {
                 multiLine={this.props.multiLine}
                 sanitise={true}
                 content={this.props.children}
+                placeholder={this.props.placeholder}
                 onChange={this.handleChange}
                 className={this.props.className}
                 onDrop={this.handleDrop}
