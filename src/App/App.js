@@ -1,58 +1,33 @@
 import React from 'react';
 
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+
 import Navbar from '../Navbar';
-import Taskboard from '../Taskboard';
-import LoadingWheel from '../LoadingWheel';
+import * as AppViews from '../AppViews';
 
-import { AppContainer, BoardWrapper } from './style';
+import { AppContainer, BodyWrapper } from './style';
 
-import { fetchBoard } from '../fetch';
-
-export default class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            board: <LoadingWheel />
-        };
-    }
-
-    componentDidMount() {
-        let { data, id } = this.props;
-
-        if (data) {
-            this.setState({
-                board:
-                    <Taskboard
-                        key={data._id}
-                        data={data}
-                    />
-            });
-        } else {
-            if (!id) {
-                id = '26d301d2-ff22-11e8-ac5d-42010a84008d';
-            }
-
-            fetchBoard(data => {
-                this.setState({
-                    board:
-                        <Taskboard
-                            key={id}
-                            data={data}
-                        />
-                });
-            }, id);
-       }
-    }
+export default class App extends React.PureComponent {
 
     render() {
         return (
-            <AppContainer>
-                <Navbar />
-                <BoardWrapper>
-                    {this.state.board}
-                </BoardWrapper>
-            </AppContainer>
+            <Router>
+                <AppContainer>
+                    <Navbar />
+                    <BodyWrapper>
+                        <Route path="/board/:id" component={AppViews.Board} />
+                    </BodyWrapper>
+
+                    {/* The server redirects invalid API paths */}
+                    <Route path="/api/*">
+                        {({ match }) =>
+                            match
+                                ? <Redirect to="/" />
+                                : null
+                        }
+                    </Route>
+                </AppContainer>
+           </Router>
         );
     }
 

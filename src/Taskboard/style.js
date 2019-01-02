@@ -6,15 +6,12 @@ import EditableText from '../EditableText';
 const grid = 10;
 
 export const BoardContainer = styled.div`
+    flex-grow: 1;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: stretch;
     color: white;
-
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
 
     margin: 0;
     padding: 0;

@@ -9,14 +9,15 @@ export const AppContainer = styled.div`
     text-align: center;
 `;
 
-export const BoardWrapper = styled.div`
+export const BodyWrapper = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     color: white;
+
+    justify-content: stretch;
 
     width: 100vw;
     height: calc(100vh - 50px);
 
-    overflow: hidden;
+    overflow: auto;
 `;

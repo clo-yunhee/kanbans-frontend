@@ -10,7 +10,7 @@ export default styled.div.attrs({
     )
 })`
     display: ${({ show }) =>
-        show ? 'inline-block' : 'none'};
+        show ? 'block' : 'none'};
 
     width: 64px;
     height: 64px;
