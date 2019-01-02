@@ -45,13 +45,12 @@ export default class LoginItem extends React.Component {
         console.log(`Attempting to ${name}: ${username}`);
         callback(
             payload,
-            this.resolveLogin,
-            this.rejectLogin,
-            remember
+            this.resolveLogin(remember),
+            this.rejectLogin
         );
     }
 
-    resolveLogin = (payload, remember) => {
+    resolveLogin = remember => payload => {
         const { username, sessionToken } = payload;
 
         console.log('Logged in as ' + username);

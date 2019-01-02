@@ -18,22 +18,17 @@ function json(response) {
     });
 }
 
-function logError(err) {
-    console.error('Request failed', err);
-}
-
 export function requestGET(url, callback) {
-    fetch(url)
+    return fetch(url)
         .then(handleErrors)
         .then(json)
-        .then(callback)
-        .catch(logError);
+        .then(callback);
 }
 
 export function requestPOST(url, data, callback) {
     if (!callback) callback = () => {};
 
-    fetch(url, {
+    return fetch(url, {
             method: 'post',
             headers: {
                 'Content-type': 'application/json'
@@ -42,8 +37,7 @@ export function requestPOST(url, data, callback) {
         })
         .then(handleErrors)
         .then(json)
-        .then(callback)
-        .catch(logError);
+        .then(callback);
 }
 
 export const defaultHost = 'http://localhost/';

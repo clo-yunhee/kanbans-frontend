@@ -8,9 +8,7 @@ import { ListContainer, ListHeader, ListHeaderTitle,
          ListHeaderDrag, ListItems,
          ListFooter, ListFooterNewItem } from './style';
 
-import { editList } from '../edit';
-import { createItem } from '../create';
-import { deleteItem } from '../delete';
+import { editList, createItem, deleteItem } from '../boards';
 
 function sortItemsByIndex(items) {
     items.sort((a, b) => a.listIndex - b.listIndex);
@@ -40,7 +38,7 @@ export default class Tasklist extends React.Component {
         this.props.data.listName = value;
         this.forceUpdate();
 
-        editList(payload, msg => {
+        editList(payload, null, msg => {
             this.props.data.listName = prev;
             this.forceUpdate();
         });

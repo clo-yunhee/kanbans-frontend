@@ -7,8 +7,7 @@ import Tasklist from '../Tasklist';
 import { BoardContainer, BoardHeader,
          BoardHeaderTitle, BoardLists } from './style';
 
-import { editBoard } from '../edit';
-import { moveItem, moveList } from '../move';
+import { editBoard, moveItem, moveList } from '../boards';
 
 function getIntId(id) {
     return id.substring(id.indexOf("\\") + 1);
@@ -79,7 +78,7 @@ export default class Taskboard extends React.Component {
             endColumnIndex: endIndex,
         };
 
-        moveList(payload, msg => {
+        moveList(payload, null, msg => {
             // if we couldn't move it, cancel.
             this.moveList(endIndex, startIndex, true);
         });
@@ -116,7 +115,7 @@ export default class Taskboard extends React.Component {
             endListIndex: endIndex,
         };
 
-        moveItem(payload, msg => {
+        moveItem(payload, null, msg => {
             // if we couldn't move it, cancel.
             this.moveItem(endList, startList, endIndex, startIndex, true);
         });

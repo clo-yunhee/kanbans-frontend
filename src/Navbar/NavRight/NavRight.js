@@ -11,7 +11,7 @@ import {
     getPersistedToken,
     storeToken,
     clearToken,
-    validateToken,
+    reauthUser,
 } from '../../users';
 
 export default class NavRight extends React.Component {
@@ -31,14 +31,18 @@ export default class NavRight extends React.Component {
             return;
         }
 
-        validateToken(token, payload => {
-            if (!payload.valid) {
+        const payload = {
+            sessionToken: token
+        };
+
+        reauthUser(payload, res => {
+            if (!res.valid) {
                 // fail silently if the token is invalid
                 clearToken();
                 return;
             }
 
-            storeToken(payload, true);
+            storeToken(res, true);
             this.setState({
                 loggedIn: true
             });

@@ -1,9 +1,9 @@
-import authReq from './makeAuthRequest';
+import { makeRequest as req } from '../utils';
 
-export const loginUser = authReq('login', 'api/user/login');
-export const registerUser = authReq('register', 'api/user/register');
-
-export { logoutUser } from './logoutUser';
+export const loginUser = req('Login', 'api/user/login');
+export const registerUser = req('Register', 'api/user/register');
+export const logoutUser = req('Logout', 'api/user/logout');
+export const reauthUser = req('Reauth', 'api/user/reauth');
 
 export {
     getToken,
@@ -12,5 +12,3 @@ export {
     clearToken,
     getPersistedToken,
 } from './storage';
-
-export { validateToken } from './validateToken';

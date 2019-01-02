@@ -3,7 +3,7 @@ import React from 'react';
 import { Loading } from './Loading';
 
 import Taskboard from '../Taskboard';
-import { fetchBoard } from '../fetch';
+import { fetchBoard } from '../boards';
 
 export class Board extends React.Component {
 
@@ -16,12 +16,16 @@ export class Board extends React.Component {
     }
 
     pullData = () => {
-        fetchBoard(data => {
+        const payload = {
+            _id: this.props.match.params.id
+        }
+
+        fetchBoard(payload, data => {
             this.setState({
                 loaded: true,
                 boardData: data,
             });
-        }, this.props.match.params.id);
+        });
     }
 
     shouldComponentUpdate(prevProps, prevState) {
@@ -37,20 +41,19 @@ export class Board extends React.Component {
 
     componentDidUpdate() {
         this.pullData();
-        console.log("update");
     }
 
     render() {
-        const { loaded, boardData } = this.state;
-
-        if (!loaded) {
+        if (!this.state.loaded) {
             return <Loading />
         }
 
+        const data = this.state.boardData;
+
         return (
             <Taskboard
-                key={boardData._id}
-                data={boardData}
+                key={data._id}
+                data={data}
             />
         );
     }
