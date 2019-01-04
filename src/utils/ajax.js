@@ -42,4 +42,4 @@ export function requestPOST(url, data, callback) {
         .then(callback);
 }
 
-export const defaultHost = 'http://localhost/';
+export const defaultHost = '/';
