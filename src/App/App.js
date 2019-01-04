@@ -16,6 +16,8 @@ export default class App extends React.PureComponent {
                     <Navbar />
                     <BodyWrapper>
                         <Route path="/board/:id" component={AppViews.Board} />
+                        <Route path="/owned" component={AppViews.Owned} />
+                        <Route path="/shared" component={AppViews.Shared} />
                     </BodyWrapper>
 
                     {/* The server redirects invalid API paths */}

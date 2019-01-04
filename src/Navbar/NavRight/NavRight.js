@@ -37,7 +37,6 @@ export default class NavRight extends React.Component {
 
         reauthUser(payload, res => {
             if (!res.valid) {
-                // fail silently if the token is invalid
                 clearToken();
                 return;
             }
@@ -46,6 +45,9 @@ export default class NavRight extends React.Component {
             this.setState({
                 loggedIn: true
             });
+        }, rej => {
+            // fail silently if the token is invalid
+            clearToken();
         });
     }
 

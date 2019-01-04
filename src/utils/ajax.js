@@ -1,3 +1,5 @@
+import { getToken } from '../users';
+
 // use json transactions
 
 function handleErrors(response) {
@@ -18,21 +20,21 @@ function json(response) {
     });
 }
 
-export function requestGET(url, callback) {
-    return fetch(url)
-        .then(handleErrors)
-        .then(json)
-        .then(callback);
-}
-
 export function requestPOST(url, data, callback) {
     if (!callback) callback = () => {};
 
+    const token = getToken();
+    const headers = (token == null) ? {
+        'Content-type': 'application/json'
+    } : {
+        'Content-type': 'application/json',
+        Authorization: `Token ${token}`
+    };
+
+
     return fetch(url, {
             method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(data)
         })
         .then(handleErrors)
