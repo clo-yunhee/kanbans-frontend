@@ -8,65 +8,23 @@ import {
 } from './style';
 
 import {
-    getPersistedToken,
+    isLoggedIn,
     storeToken,
     clearToken,
-    reauthUser,
 } from '../../users';
 
 export default class NavRight extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            loggedIn: false
-        };
-    }
-
-    componentDidMount() {
-        // re-log if the token is persisted
-        const token = getPersistedToken();
-        if (token === null) {
-            return;
-        }
-
-        const payload = {
-            sessionToken: token
-        };
-
-        reauthUser(payload, res => {
-            if (!res.valid) {
-                clearToken();
-                return;
-            }
-
-            storeToken(res, true);
-            this.setState({
-                loggedIn: true
-            });
-        }, rej => {
-            // fail silently if the token is invalid
-            clearToken();
-        });
-    }
-
     handleLoggedIn = (payload, remember) => {
         storeToken(payload, remember);
-        this.setState({
-            loggedIn: true
-        })
     }
 
     handleLoggedOut = () => {
         clearToken();
-        this.setState({
-            loggedIn: false
-        })
     }
 
     renderLogin() {
-        if (this.state.loggedIn) {
+        if (isLoggedIn()) {
             return (
                 <LogoutItem onLogout={this.handleLoggedOut} />
             )

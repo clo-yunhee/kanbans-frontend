@@ -12,8 +12,12 @@ const LoadingContainer = styled.div`
     justify-content: center;
 `;
 
-export const Loading = () => (
-    <LoadingContainer>
-        <LoadingWheel show={true} />
-    </LoadingContainer>
-)
+export class Loading extends React.Component {
+    render() {
+        return (
+            <LoadingContainer>
+                <LoadingWheel show={true} />
+            </LoadingContainer>
+        )
+    }
+}

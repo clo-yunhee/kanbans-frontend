@@ -9,9 +9,12 @@ export const getOwnedBoards = req('Owned boards', 'api/user/owned');
 export const getSharedBoards = req('Shared boards', 'api/user/shared');
 
 export {
+    isLoggedIn,
     getToken,
     getUsername,
     storeToken,
     clearToken,
     getPersistedToken,
+    listenLogin,
+    listenLogout,
 } from './storage';

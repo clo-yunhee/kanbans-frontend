@@ -38,7 +38,7 @@ export default class Tasklist extends React.Component {
         this.props.data.listName = value;
         this.forceUpdate();
 
-        editList(payload, null, msg => {
+        editList(payload, msg => {
             this.props.data.listName = prev;
             this.forceUpdate();
         });
